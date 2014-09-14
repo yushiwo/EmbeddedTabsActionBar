@@ -1,28 +1,30 @@
 package me.codethink.embeddedtabsactionbar;
 
 import android.app.Activity;
-import android.app.ActionBar;
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v13.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.os.Build;
 
 public class MainActivity extends Activity {
-
+    private TabContentPagerAdapter mTabContentPagerAdapter;
+    private ViewPager mViewPager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if (savedInstanceState == null) {
-            getFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
-                    .commit();
-        }
+        mTabContentPagerAdapter = new TabContentPagerAdapter(getFragmentManager());
+        mViewPager = (ViewPager) findViewById(R.id.pager);
+        mViewPager.setAdapter(mTabContentPagerAdapter);
+
     }
 
 
@@ -46,18 +48,56 @@ public class MainActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
+    public static class TabContentPagerAdapter extends FragmentStatePagerAdapter {
 
-        public PlaceholderFragment() {
+        public TabContentPagerAdapter(FragmentManager fm) {
+            super(fm);
         }
 
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+        public Fragment getItem(int i) {
+            Fragment fragment = new DemoObjectFragment();
+            Bundle args = new Bundle();
+            switch (i) {
+                case 0:
+                    args.putInt(DemoObjectFragment.ARG_OBJECT, Color.RED);
+                    break;
+                case 1:
+                    args.putInt(DemoObjectFragment.ARG_OBJECT, Color.YELLOW);
+                    break;
+                case 2:
+                    args.putInt(DemoObjectFragment.ARG_OBJECT, Color.BLUE);
+                    break;
+            }
+
+            fragment.setArguments(args);
+            return fragment;
+
+        }
+
+        @Override
+        public int getCount() {
+            return 3;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return "OBJECT " + (position + 1);
+        }
+
+    }
+
+    public static class DemoObjectFragment extends Fragment {
+        public static final String ARG_OBJECT = "object";
+
+        @Override
+        public View onCreateView(LayoutInflater inflater,
+                                 ViewGroup container, Bundle savedInstanceState) {
+
+            View rootView = inflater.inflate(
+                    R.layout.fragment_main, container, false);
+            Bundle args = getArguments();
+            rootView.setBackgroundColor(args.getInt(ARG_OBJECT));
             return rootView;
         }
     }
