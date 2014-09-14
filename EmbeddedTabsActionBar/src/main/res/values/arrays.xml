@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="actionbar_icons">
+        <item>@drawable/actionbar_home</item>
+        <item>@drawable/actionbar_tag</item>
+        <item>@drawable/actionbar_account</item>
+    </string-array>
+</resources>

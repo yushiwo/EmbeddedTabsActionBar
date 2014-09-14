@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v13.app.FragmentStatePagerAdapter;
@@ -14,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import java.lang.reflect.Method;
 
@@ -58,10 +60,15 @@ public class MainActivity extends Activity {
             }
         };
 
+        TypedArray iconIds = getResources().obtainTypedArray(R.array.actionbar_icons);
         for (int i = 0; i < 3; i++) {
+            View view = getLayoutInflater().inflate(R.layout.actionbar_tab_layout, null);
+            ImageView imageView = (ImageView) view.findViewById(R.id.icon);
+            imageView.setImageResource(iconIds.getResourceId(i, -1));
+
             actionBar.addTab(
                     actionBar.newTab()
-                            .setText("Tab " + (i + 1))
+                            .setCustomView(view)
                             .setTabListener(tabListener));
         }
 
