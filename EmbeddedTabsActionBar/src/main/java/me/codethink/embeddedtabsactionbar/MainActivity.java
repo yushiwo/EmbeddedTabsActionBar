@@ -65,6 +65,18 @@ public class MainActivity extends Activity {
                             .setTabListener(tabListener));
         }
 
+        enableEmbeddedTabs(actionBar);
+    }
+
+    private void enableEmbeddedTabs(Object actionBar) {
+        try {
+            Method setHasEmbeddedTabsMethod = actionBar.getClass().getDeclaredMethod("setHasEmbeddedTabs", boolean.class);
+            setHasEmbeddedTabsMethod.setAccessible(true);
+            setHasEmbeddedTabsMethod.invoke(actionBar, true);
+        } catch (Exception e) {
+            Log.v("EmbeddedTabs", e.getMessage().toString());
+
+        }
     }
 
     @Override
