@@ -8,18 +8,20 @@
         <item name="android:actionBarTabBarStyle">@style/customActionBarTabBarStyle</item>
     </style>
 
+    <!-- 修改ActionBar颜色，删除TabBar的divider -->
     <style name="EmbeddedActionBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid">
         <item name="android:displayOptions">none</item>
         <item name="android:background">@color/actionbar_dark_grey</item>
     </style>
 
+    <!-- 设置tab的相关样式 -->
     <style name="EmbeddedTabStyle" parent="@android:style/Widget.Holo.Light.ActionBar.TabView">
         <item name="android:background">@drawable/actionbar_tabs_bg</item>
         <item name="android:padding">0dp</item>
         <item name="android:gravity">center</item>
     </style>
 
-
+    <!-- 去掉TabBar的divider -->
     <style name="customActionBarTabBarStyle" parent="@android:style/Widget.Holo.Light.ActionBar.TabBar">
         <item name="android:divider">@null</item>
     </style>

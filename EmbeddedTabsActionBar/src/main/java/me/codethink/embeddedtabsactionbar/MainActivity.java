@@ -22,6 +22,7 @@ import java.lang.reflect.Method;
 public class MainActivity extends Activity {
     private TabContentPagerAdapter mTabContentPagerAdapter;
     private ViewPager mViewPager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         final ActionBar actionBar = getActionBar();
@@ -33,7 +34,7 @@ public class MainActivity extends Activity {
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mTabContentPagerAdapter);
 
-        mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
+        mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
                 actionBar.setSelectedNavigationItem(position);
@@ -60,6 +61,7 @@ public class MainActivity extends Activity {
             }
         };
 
+        //在ActionBar中嵌入Tab
         TypedArray iconIds = getResources().obtainTypedArray(R.array.actionbar_icons);
         for (int i = 0; i < 3; i++) {
             View view = getLayoutInflater().inflate(R.layout.actionbar_tab_layout, null);
@@ -75,6 +77,11 @@ public class MainActivity extends Activity {
         enableEmbeddedTabs(actionBar);
     }
 
+    /**
+     * 通过反射机制强制嵌入TabBar是实现这个效果
+     *
+     * @param actionBar
+     */
     private void enableEmbeddedTabs(Object actionBar) {
         try {
             Method setHasEmbeddedTabsMethod = actionBar.getClass().getDeclaredMethod("setHasEmbeddedTabs", boolean.class);
@@ -88,7 +95,7 @@ public class MainActivity extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        
+
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
@@ -145,6 +152,9 @@ public class MainActivity extends Activity {
 
     }
 
+    /**
+     * 切换tab显示的fragment
+     */
     public static class DemoObjectFragment extends Fragment {
         public static final String ARG_OBJECT = "object";
 
